@@ -18,8 +18,12 @@ public class IniciarJuego {
 		ventana.setVisible(true);
 		Juego juego = new Juego(anchoVentana, largoVentana);
 		ventana.add(juego);
+		ventana.addKeyListener(juego);
 		ventana.pack();
-
+		
+		Thread thread = new Thread(juego);
+	    thread.start();
+	    
 	}
 
 }
