@@ -83,8 +83,6 @@ public abstract class ElementoBasico implements Elemento {
 
 	@Override
 	public boolean hayColision(Elemento elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+            return false;
+        }
 }
