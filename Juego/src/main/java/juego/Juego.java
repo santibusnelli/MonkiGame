@@ -34,8 +34,8 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		this.enemigos = new ArrayList<Enemigo>();
 		this.enemigosPorLinea = enemigosPorLinea;
         this.filasDeEnemigos = filasDeEnemigos;
-		//this.pantallaInicio = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg" );
-		//this.pantallaGanador = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpeg");
+		this.pantallaInicio = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg" );
+		this.pantallaGanador = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpg");
 		inicializarJuego();
 	}
 	
@@ -66,7 +66,7 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		
 		super.paintComponent(g);
 		if (pantallaActual == PANTALLA_INICIO) {
-            //dibujarInicioJuego(g);
+            dibujarInicioJuego(g);
         }if (pantallaActual == PANTALLA_JUEGO) {
         	dibujar(g);
         }
@@ -163,10 +163,10 @@ public class Juego extends JPanel implements KeyListener, Runnable {
             enemigo.dibujarse(g);
         }
     }
-	/*
+	
 	private void dibujarInicioJuego(Graphics g) {
 		pantallaInicio.dibujarse(g);
 	}
-	*/
+	
 	
 }

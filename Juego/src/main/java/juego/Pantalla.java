@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 public class Pantalla {
 	
-	 protected BufferedImage img;
+	protected BufferedImage img;
 	protected int ancho;
 	protected int largo;
 	 
@@ -18,8 +18,8 @@ public class Pantalla {
 			this.ancho = ancho;
             this.largo = largo;
 		try {
-			String path = Paths.get(Pantalla.class.getClassLoader().getResource("resource").toURI()).toString();
-				this.img = ImageIO.read(new File(path));
+			String path = Paths.get(Pantalla.class.getClassLoader().getResource(resource).toURI()).toString();
+			this.img = ImageIO.read(new File(path));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} catch (URISyntaxException e) {
