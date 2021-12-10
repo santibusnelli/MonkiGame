@@ -31,7 +31,7 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		this.pantallaActual = PANTALLA_INICIO;
 		this.anchoJuego = anchoJuego;
 		this.largoJuego = largoJuego;
-		this.mono = new Mono(30, 30, 0, 0, 30, 30, Color.DARK_GRAY);
+		this.mono = new Mono(350, 570, 0, 0, 40, 40, Color.DARK_GRAY);
 		this.enemigos = new ArrayList<Enemigo>();
 		this.enemigosPorLinea = enemigosPorLinea;
         this.filasDeEnemigos = filasDeEnemigos;
@@ -107,16 +107,16 @@ public class Juego extends JPanel implements KeyListener, Runnable {
         if (pantallaActual == PANTALLA_JUEGO) {
 
 			if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-				mono.setPosicionX(mono.getPosicionX() + 40);
+				mono.setPosicionX(mono.getPosicionX() + 30);
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-				mono.setPosicionX(mono.getPosicionX() - 40);
+				mono.setPosicionX(mono.getPosicionX() - 30);
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-				mono.setPosicionY(mono.getPosicionY() - 40);
+				mono.setPosicionY(mono.getPosicionY() - 30);
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-				mono.setPosicionY(mono.getPosicionY() + 40);
+				mono.setPosicionY(mono.getPosicionY() + 30);
 			}
         }
 	}
@@ -146,10 +146,10 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		for (int x = 1; x < enemigosPorLinea; x++) {
             for (int y = 1; y < filasDeEnemigos; y++) {
             	
-            	agregarEnemigo(new Patrulla(500 + x * -200, 120, 2, 0, 60, 30, Color.green));
-				agregarEnemigo(new Patrulla(500, 50, -40, 0, 60, 30, Color.black));
-				agregarEnemigo(new Ambulancia(500, 200, -20, 0, 100, 40, Color.gray));
-				agregarEnemigo(new Bomberos(500, 500, -30, 0, 150, 40, Color.red));		
+            	//agregarEnemigo(new Patrulla(500 + x * -200, 120, 2, 0, 60, 30, Color.green));
+				agregarEnemigo(new Patrulla(500, 400, -20, 0, 60, 40, Color.black));
+				agregarEnemigo(new Ambulancia(500, 200, -15, 0, 100, 40, Color.gray));
+				agregarEnemigo(new Bomberos(500, 500, -15, 0, 120, 40, Color.red));		
             }
         }
 		
