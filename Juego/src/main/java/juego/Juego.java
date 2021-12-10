@@ -23,7 +23,8 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	private List<Enemigo> enemigos;
 	private int enemigosPorLinea;
     private int filasDeEnemigos;
-	//private Pantalla pantallaInicio;
+	private Pantalla pantallaInicio;
+	private Pantalla pantallaGanador;
 	
 	public Juego(int anchoJuego, int largoJuego, int enemigosPorLinea, int filasDeEnemigos ) {
 		this.pantallaActual = PANTALLA_INICIO;
@@ -33,7 +34,8 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		this.enemigos = new ArrayList<Enemigo>();
 		this.enemigosPorLinea = enemigosPorLinea;
         this.filasDeEnemigos = filasDeEnemigos;
-		//this.pantallaInicio = new Pantalla(anchoJuego, largoJuego, "imagenes/monoInicio.jpeg" );
+		//this.pantallaInicio = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg" );
+		//this.pantallaGanador = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpeg");
 		inicializarJuego();
 	}
 	
