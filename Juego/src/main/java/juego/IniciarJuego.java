@@ -8,8 +8,8 @@ public class IniciarJuego {
 	public static void main(String[] args) {
 		int anchoVentana = 800;
 		int largoVentana = 600;
-		int enemigosPorLinea = 10;
-        int filasDeEnemigos = 6;
+		int enemigosPorLinea = 6;
+        int filasDeEnemigos = 3;
 		
 		System.setProperty("sun.java2d.opengl", "true");
 		
