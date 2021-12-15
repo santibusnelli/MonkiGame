@@ -83,6 +83,18 @@ public abstract class ElementoBasico implements Elemento {
 
 	@Override
 	public boolean hayColision(Elemento elemento) {
-            return false;
+		if (Utilidades.hayColision(
+				this.getPosicionX(),
+				this.getPosicionY(),
+				this.getAncho(),
+				this.getLargo(),
+				elemento.getPosicionX(),
+				elemento.getPosicionY(),
+				elemento.getAncho(),
+				elemento.getLargo())) {
+				return true;
+	        } else {
+	        	return false;
+	        }
         }
 }

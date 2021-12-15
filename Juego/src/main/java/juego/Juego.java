@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
+
 
 public class Juego extends JPanel implements KeyListener, Runnable {
 	private final static int PANTALLA_INICIO = 1;
@@ -37,7 +39,7 @@ public class Juego extends JPanel implements KeyListener, Runnable {
         this.filasDeEnemigos = filasDeEnemigos;
 		this.pantallaInicio = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg" );
 		this.pantallaGanador = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpg");
-		this.pantallaFondo = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaFondo.png");
+		this.pantallaFondo = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaFondo.jpg");
 		inicializarJuego();
 	}
 	
@@ -107,21 +109,22 @@ public class Juego extends JPanel implements KeyListener, Runnable {
         if (pantallaActual == PANTALLA_JUEGO) {
 
 			if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-				mono.setPosicionX(mono.getPosicionX() + 30);
+				mono.setPosicionX(mono.getPosicionX() + 20);
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-				mono.setPosicionX(mono.getPosicionX() - 30);
+				mono.setPosicionX(mono.getPosicionX() - 20);
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_UP) {
-				mono.setPosicionY(mono.getPosicionY() - 30);
+				mono.setPosicionY(mono.getPosicionY() - 20);
 			}
 			if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
-				mono.setPosicionY(mono.getPosicionY() + 30);
+				mono.setPosicionY(mono.getPosicionY() + 20);
 			}
         }
 	}
 	
 	private void actualizarJuego() {
+		verificarEstadoAmbiente();
 		mono.moverse();
 		moverEnemigos();
 	}
@@ -171,5 +174,23 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		pantallaInicio.dibujarse(g);
 	}
 	
+	   private void verificarEstadoAmbiente() {
+		   verificarColisionContraVentana();
+	   }
+	
+	   private void verificarColisionContraVentana(){
+		   if(mono.getPosicionX()>=760) {
+				mono.setPosicionX(760);
+			}else if (mono.getPosicionX() <= 0) {
+				mono.setPosicionX(10);
+			}
+		   if(mono.getPosicionY()>=570) {
+				mono.setPosicionY(550);
+			} else if (mono.getPosicionY()<=0) {
+				mono.setPosicionY(0);
+			}
+			
+		
+	   }
 	
 }

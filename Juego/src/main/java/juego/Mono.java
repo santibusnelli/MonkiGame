@@ -28,6 +28,7 @@ public class Mono extends ElementoBasico{
 	public void dibujarse(Graphics g) {
 		try {
 			g.drawImage(img, getPosicionX(), getPosicionY(), this.getAncho(), this.getLargo(), null);
+			g.drawRect(getPosicionX(), getPosicionY(), this.getAncho(), this.getLargo());
 		} catch (Exception e1) {
 	            throw new RuntimeException(e1);
 	    }
