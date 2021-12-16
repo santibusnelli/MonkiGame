@@ -16,8 +16,6 @@ public interface Elemento extends Dibujable {
 
 	public int getVelocidadY();
 
-	public Color getColor();
-
 	public void moverse();
 
 	public boolean hayColision(Elemento elemento);

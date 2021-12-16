@@ -3,6 +3,7 @@ package juego;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -22,12 +23,14 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	private int pantallaActual;
 	private int anchoJuego;
 	private int largoJuego;
+	private Banana banana;
 	private Mono mono;
 	private Arbol arbol;
 	private List<Enemigo> enemigos;
 	private int enemigosPorLinea;
     private int filasDeEnemigos;
     private Vidas vidas;
+    private Puntaje puntaje;
 	private Pantalla pantallaInicio;
 	private Pantalla pantallaGanaste;
 	private Pantalla pantallaFondo;
@@ -41,7 +44,6 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		this.enemigosPorLinea = enemigosPorLinea;
         this.filasDeEnemigos = filasDeEnemigos;
 		this.pantallaInicio = new PantallaInicio(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg");
-		this.pantallaGanaste = new PantallaGanador(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpg");
 		this.pantallaFondo = new PantallaJuego(anchoJuego, largoJuego, "imagenes/PantallaFondo.jpg");
 		inicializarJuego();
 	}
@@ -54,9 +56,12 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	private void inicializarJuego(){
 		this.enemigos.clear();
 		this.pantallaPerdiste = null;
-		this.mono = new Mono(400, 600, 0, 0, 40, 40, Color.DARK_GRAY);
-		this.arbol = new Arbol(380, 0, 0, 0, 60, 60, Color.DARK_GRAY);
+		this.pantallaGanaste = null;
+		this.mono = new Mono(400, 600, 0, 0, 40, 40);
+		this.arbol = new Arbol(380, 0, 0, 0, 60, 60);
         this.vidas = new Vidas(700, 590, new Font("Arial Black", 10, 20), Color.red, 1);
+        this.banana = new Banana(new Random().nextInt(750),new Random().nextInt(550), 0, 0, 20, 10);
+        this.puntaje = new Puntaje(0, 590, new Font("Arial black", 10, 20), Color.blue);
 		agregarEnemigos(enemigosPorLinea, filasDeEnemigos);
 	}
 
@@ -75,18 +80,20 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	
 	@Override
 	protected void paintComponent (Graphics g) {
-		//super.paintComponent(g);
-		this.limpiarPantalla(g);
+		super.paintComponent(g);
 		if (pantallaActual == PANTALLA_INICIO) {
 			pantallaInicio.dibujarse(g);
         }if (pantallaActual == PANTALLA_JUEGO) {
         	dibujar(g);
         }if(pantallaActual == PANTALLA_PERDEDOR) {
         	if (this.pantallaPerdiste == null) {
-        		this.pantallaPerdiste = new PantallaPerdedor(anchoJuego, largoJuego, "imagenes/PantallaPerdiste.jpg");
+        		this.pantallaPerdiste = new PantallaPerdedor(anchoJuego, largoJuego, "imagenes/PantallaPerdiste.jpg", this.puntaje.getPuntaje());
         	}
         	pantallaPerdiste.dibujarse(g);
         }if(pantallaActual == PANTALLA_GANADOR) {
+        	if(this.pantallaGanaste == null) {
+        		this.pantallaGanaste = new PantallaGanador(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpg", this.puntaje.getPuntaje());
+        	}
         	pantallaGanaste.dibujarse(g);
         }
         
@@ -98,6 +105,8 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		arbol.dibujarse(g);
 		dibujarEnemigos(g);
 		vidas.dibujarse(g);
+		puntaje.dibujarse(g);
+		banana.dibujarse(g);
 	}
 	
 	@Override
@@ -165,9 +174,9 @@ public class Juego extends JPanel implements KeyListener, Runnable {
             for (int y = 1; y < filasDeEnemigos; y++) {
             	
             	//agregarEnemigo(new Patrulla(500 + x * -200, 120, 2, 0, 60, 30, Color.green));
-				agregarEnemigo(new Patrulla(500, 400, -20, 0, 60, 40, Color.black));
-				agregarEnemigo(new Ambulancia(500, 200, -15, 0, 100, 40, Color.gray));
-				agregarEnemigo(new Bomberos(500, 500, -1, 0, 120, 40, Color.red));		
+				agregarEnemigo(new Patrulla(500, 400, -20, 0, 60, 40));
+				agregarEnemigo(new Ambulancia(500, 200, -1, 0, 100, 40));
+				agregarEnemigo(new Bomberos(500, 500, -1, 0, 120, 40));		
             }
         }
 		
@@ -184,16 +193,11 @@ public class Juego extends JPanel implements KeyListener, Runnable {
             enemigo.dibujarse(g);
         }
     }
-    
-    private void limpiarPantalla(Graphics graphics) {
-        graphics.setColor(Color.cyan);
-        graphics.fillRect(0, 0, anchoJuego, largoJuego);
-    }
-
 	
 	   private void verificarEstadoAmbiente() {
 		   verificarColisionContraVentana();
 		   verificarColisionEntreMonoYEnemigos();
+		   verificarColisionEntreMonoYBanana();
 		   verificarFinDeJuego();
 	   }
 	
@@ -220,6 +224,13 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 				}
 			}
 		}
+	   
+	   private void verificarColisionEntreMonoYBanana() {
+		   if (mono.hayColision(banana)) {
+			   this.banana = new Banana(new Random().nextInt(750),new Random().nextInt(550), 0, 0, 20, 10);
+			   puntaje.sumarPunto();
+		   }
+	   }
 
 	   private void verificarFinDeJuego() {
 	        if (vidas.getVidas() == 0) {

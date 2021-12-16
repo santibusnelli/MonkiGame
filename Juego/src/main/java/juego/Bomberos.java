@@ -1,6 +1,6 @@
 package juego;
 
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,8 +14,8 @@ public class Bomberos extends Enemigo{
 
 	private BufferedImage img;
 
-	public Bomberos(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo, Color color) {
-		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo, color);
+	public Bomberos(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
+		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo);
 		try {
 			String path = Paths.get(Bomberos.class.getClassLoader().getResource("imagenes/bomberos.png").toURI()).toString();
 			this.img = ImageIO.read(new File(path));

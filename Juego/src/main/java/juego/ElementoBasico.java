@@ -1,7 +1,5 @@
 package juego;
 
-import java.awt.Color;
-//import java.awt.Graphics;
 
 public abstract class ElementoBasico implements Elemento {
 	private int ancho;
@@ -10,16 +8,14 @@ public abstract class ElementoBasico implements Elemento {
 	private int posicionY;
 	private int velocidadX;
 	private int velocidadY;
-	private Color color;
 	
-	public ElementoBasico(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo, Color color) {
+	public ElementoBasico(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.velocidadX = velocidadX;
         this.velocidadY = velocidadY;
         this.ancho = ancho;
         this.largo = largo;
-        this.color = color;
     }
 	
 	
@@ -51,11 +47,6 @@ public abstract class ElementoBasico implements Elemento {
 	@Override
 	public int getVelocidadY() {
 		return velocidadY;
-	}
-
-	@Override
-	public Color getColor() {
-		return color;
 	}
 	
 	public void setPosicionX(int posicionX) {

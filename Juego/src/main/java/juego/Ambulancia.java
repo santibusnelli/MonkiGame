@@ -1,6 +1,6 @@
 package juego;
 
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,8 +14,8 @@ public class Ambulancia extends Enemigo{
 
 	private BufferedImage img;
 
-	public Ambulancia(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo, Color color) {
-		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo, color);
+	public Ambulancia(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
+		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo);
 		try {
 			String path = Paths.get(Ambulancia.class.getClassLoader().getResource("imagenes/ambulancia.png").toURI()).toString();
 			this.img = ImageIO.read(new File(path));

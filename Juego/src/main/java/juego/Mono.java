@@ -1,6 +1,5 @@
 package juego;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,8 +12,8 @@ import javax.imageio.ImageIO;
 public class Mono extends ElementoBasico{
 	private BufferedImage img;
 
-	public Mono(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo, Color color) {
-		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo, color);
+	public Mono(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
+		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo);
 		try {
 			String path = Paths.get(Mono.class.getClassLoader().getResource("imagenes/mono.png").toURI()).toString();
 			this.img = ImageIO.read(new File(path));
@@ -28,7 +27,6 @@ public class Mono extends ElementoBasico{
 	public void dibujarse(Graphics g) {
 		try {
 			g.drawImage(img, getPosicionX(), getPosicionY(), this.getAncho(), this.getLargo(), null);
-			g.drawRect(getPosicionX(), getPosicionY(), this.getAncho(), this.getLargo());
 		} catch (Exception e1) {
 	            throw new RuntimeException(e1);
 	    }

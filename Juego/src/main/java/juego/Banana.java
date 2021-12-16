@@ -1,22 +1,22 @@
 package juego;
 
-
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+
 import javax.imageio.ImageIO;
 
+public class Banana extends ElementoBasico {
 
-public class Arbol extends ElementoBasico{
 	private BufferedImage img;
 
-	public Arbol(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
+	public Banana(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
 		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo);
 		try {
-			String path = Paths.get(Arbol.class.getClassLoader().getResource("imagenes/Arbol.png").toURI()).toString();
+			String path = Paths.get(Banana.class.getClassLoader().getResource("imagenes/Banana.png").toURI()).toString();
 			this.img = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -24,6 +24,7 @@ public class Arbol extends ElementoBasico{
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void dibujarse(Graphics g) {
 		try {
@@ -31,5 +32,7 @@ public class Arbol extends ElementoBasico{
 		} catch (Exception e1) {
 	            throw new RuntimeException(e1);
 	    }
+		
 	}
+
 }
