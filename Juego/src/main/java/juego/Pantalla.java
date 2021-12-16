@@ -1,5 +1,6 @@
 package juego;
 
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,7 +9,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
-public class Pantalla {
+public abstract class Pantalla implements Dibujable {
 	
 	protected BufferedImage img;
 	protected int ancho;
@@ -34,5 +35,6 @@ public class Pantalla {
 	            throw new RuntimeException(e1);
 	        }
 	    }
+	    
 	    
 }

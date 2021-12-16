@@ -10,13 +10,13 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
 
-public class Mono extends ElementoBasico{
+public class Arbol extends ElementoBasico{
 	private BufferedImage img;
 
-	public Mono(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo, Color color) {
+	public Arbol(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo, Color color) {
 		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo, color);
 		try {
-			String path = Paths.get(Mono.class.getClassLoader().getResource("imagenes/mono.png").toURI()).toString();
+			String path = Paths.get(Arbol.class.getClassLoader().getResource("imagenes/Arbol.png").toURI()).toString();
 			this.img = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -33,11 +33,4 @@ public class Mono extends ElementoBasico{
 	            throw new RuntimeException(e1);
 	    }
 	}
-	
-	
-	public void morir() {
-		setPosicionY(600);
-		setPosicionX(400);
-	}
-	
 }

@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
+import java.util.Iterator;
 
 
 public class Juego extends JPanel implements KeyListener, Runnable {
@@ -22,24 +23,30 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	private int anchoJuego;
 	private int largoJuego;
 	private Mono mono;
+	private Arbol arbol;
 	private List<Enemigo> enemigos;
 	private int enemigosPorLinea;
     private int filasDeEnemigos;
+    private Vidas vidas;
 	private Pantalla pantallaInicio;
-	private Pantalla pantallaGanador;
+	private Pantalla pantallaGanaste;
 	private Pantalla pantallaFondo;
+	private Pantalla pantallaPerdiste;
 	
 	public Juego(int anchoJuego, int largoJuego, int enemigosPorLinea, int filasDeEnemigos ) {
 		this.pantallaActual = PANTALLA_INICIO;
 		this.anchoJuego = anchoJuego;
 		this.largoJuego = largoJuego;
-		this.mono = new Mono(350, 570, 0, 0, 40, 40, Color.DARK_GRAY);
+		this.mono = new Mono(400, 600, 0, 0, 40, 40, Color.DARK_GRAY);
+		this.arbol = new Arbol(0, 0, 0, 0, 60, 60, Color.DARK_GRAY);
 		this.enemigos = new ArrayList<Enemigo>();
 		this.enemigosPorLinea = enemigosPorLinea;
         this.filasDeEnemigos = filasDeEnemigos;
-		this.pantallaInicio = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg" );
-		this.pantallaGanador = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpg");
-		this.pantallaFondo = new Pantalla(anchoJuego, largoJuego, "imagenes/PantallaFondo.jpg");
+        this.vidas = new Vidas(700, 590, new Font("Arial Black", 10, 20), Color.red, 1);
+		this.pantallaInicio = new PantallaInicio(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg");
+		this.pantallaGanaste = new PantallaGanador(anchoJuego, largoJuego, "imagenes/PantallaGanaste.jpg");
+		this.pantallaFondo = new PantallaJuego(anchoJuego, largoJuego, "imagenes/PantallaFondo.jpg");
+		this.pantallaPerdiste = new PantallaPerdedor(anchoJuego, largoJuego, "imagenes/PantallaPerdiste.jpg");
 		inicializarJuego();
 	}
 	
@@ -67,19 +74,25 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	
 	@Override
 	protected void paintComponent (Graphics g) {
-		
 		super.paintComponent(g);
 		if (pantallaActual == PANTALLA_INICIO) {
-            dibujarInicioJuego(g);
+			pantallaInicio.dibujarse(g);
         }if (pantallaActual == PANTALLA_JUEGO) {
         	dibujar(g);
+        }if(pantallaActual == PANTALLA_PERDEDOR) {
+        	pantallaPerdiste.dibujarse(g);
+        }if(pantallaActual == PANTALLA_GANADOR) {
+        	pantallaGanaste.dibujarse(g);
         }
+        
 	}
 	
 	public void dibujar(Graphics g) {
 		pantallaFondo.dibujarse(g);
 		mono.dibujarse(g);
+		arbol.dibujarse(g);
 		dibujarEnemigos(g);
+		vidas.dibujarse(g);
 	}
 	
 	@Override
@@ -170,27 +183,42 @@ public class Juego extends JPanel implements KeyListener, Runnable {
         }
     }
 	
-	private void dibujarInicioJuego(Graphics g) {
-		pantallaInicio.dibujarse(g);
-	}
-	
 	   private void verificarEstadoAmbiente() {
 		   verificarColisionContraVentana();
+		   verificarColisionEntreMonoYEnemigos();
+		   verificarFinDeJuego();
 	   }
 	
 	   private void verificarColisionContraVentana(){
 		   if(mono.getPosicionX()>=760) {
 				mono.setPosicionX(760);
 			}else if (mono.getPosicionX() <= 0) {
-				mono.setPosicionX(10);
+				mono.setPosicionX(0);
 			}
-		   if(mono.getPosicionY()>=570) {
-				mono.setPosicionY(550);
+		   if(mono.getPosicionY()>=560) {
+				mono.setPosicionY(560);
 			} else if (mono.getPosicionY()<=0) {
 				mono.setPosicionY(0);
 			}
-			
-		
+	   }
+	   
+	   private void verificarColisionEntreMonoYEnemigos	() {
+			Iterator<Enemigo> iterador = enemigos.iterator();
+			while (iterador.hasNext()) {
+				Enemigo enemigo = iterador.next();
+				if (enemigo.hayColision(mono)) {
+					mono.morir();
+					vidas.perderVida();
+				}
+			}
+		}
+	   
+	   private void verificarFinDeJuego() {
+	        if (vidas.getVidas() == 0) {
+	            pantallaActual = PANTALLA_PERDEDOR;
+	        }if (mono.getPosicionX() == arbol.getPosicionX() && mono.getPosicionY() == arbol.getPosicionY()) {
+	            pantallaActual = PANTALLA_GANADOR;
+	        }
 	   }
 	
 }
