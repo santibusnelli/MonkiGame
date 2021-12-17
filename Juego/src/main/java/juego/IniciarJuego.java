@@ -8,8 +8,7 @@ public class IniciarJuego {
 	public static void main(String[] args) {
 		int anchoVentana = 800;
 		int largoVentana = 600;
-		int enemigosPorLinea = 6;
-        int filasDeEnemigos = 3;
+		int enemigosPorLinea = 3;
 		
 		System.setProperty("sun.java2d.opengl", "true");
 		
@@ -18,7 +17,7 @@ public class IniciarJuego {
 		ventana.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		ventana.setLocationRelativeTo(null);
 		ventana.setVisible(true);
-		Juego juego = new Juego(anchoVentana, largoVentana, enemigosPorLinea, filasDeEnemigos);
+		Juego juego = new Juego(anchoVentana, largoVentana, enemigosPorLinea);
 		ventana.add(juego);
 		ventana.addKeyListener(juego);
 		ventana.pack();

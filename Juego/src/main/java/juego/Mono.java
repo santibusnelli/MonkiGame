@@ -34,8 +34,14 @@ public class Mono extends ElementoBasico{
 	
 	
 	public void morir() {
-		setPosicionY(600);
-		setPosicionX(400);
+		if (getPosicionY() >= 300) {
+			setPosicionY(600);
+			setPosicionX(400);
+		}else {
+			setPosicionY(300);
+			setPosicionX(400);
+		}
+
 	}
 	
 }

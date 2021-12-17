@@ -10,14 +10,14 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
-public class Patrulla extends Enemigo{
+public class Bulldozer extends Enemigo{
 
 	private BufferedImage img;
 
-	public Patrulla(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
+	public Bulldozer(int posicionX, int posicionY, int velocidadX, int velocidadY, int ancho, int largo) {
 		super(posicionX, posicionY, velocidadX, velocidadY, ancho, largo);
 		try {
-			String path = Paths.get(Patrulla.class.getClassLoader().getResource("imagenes/Patrulla.png").toURI()).toString();
+			String path = Paths.get(Bulldozer.class.getClassLoader().getResource("imagenes/Bulldozer.png").toURI()).toString();
 			this.img = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			throw new RuntimeException(e);

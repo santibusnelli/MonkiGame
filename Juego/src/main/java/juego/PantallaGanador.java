@@ -26,7 +26,7 @@ public class PantallaGanador extends Pantalla {
         g.setColor(Color.MAGENTA);
         g.setFont(new Font("Arial black", 30, 50));
         if (puntos > 0) {
-        	g.drawString("Recolectaste: " + puntos + " bananas", 80, 300); 
+        	g.drawString("Recolectaste: " + puntos + " bananas", 60, 300); 
         }else {
             g.drawString("No recolectaste bananas :(", 40, 300);
         }
