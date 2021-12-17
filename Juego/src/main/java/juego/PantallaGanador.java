@@ -20,7 +20,7 @@ public class PantallaGanador extends Pantalla {
 	}
 	
 	public void mostrarMensaje(Graphics g) {
-		g.setColor(Color.white);
+		g.setColor(Color.black);
         g.setFont(new Font("Arial black", 50, 65));
         g.drawString("Felicidades, ganaste!!", 10, 100);
         g.setColor(Color.MAGENTA);
