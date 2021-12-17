@@ -30,6 +30,7 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	private int enemigosPorLinea;
     private Vidas vidas;
     private Puntaje puntaje;
+    private Sonidos sonidos;
 	private Pantalla pantallaInicio;
 	private Pantalla pantallaGanaste;
 	private Pantalla pantallaFondo;
@@ -43,6 +44,8 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		this.enemigosPorLinea = enemigosPorLinea;
 		this.pantallaInicio = new PantallaInicio(anchoJuego, largoJuego, "imagenes/PantallaInicio.jpg");
 		this.pantallaFondo = new PantallaJuego(anchoJuego, largoJuego, "imagenes/PantallaFondo.jpg");
+		cargarSonidos();
+	    this.sonidos.repetirSonido("background");
 		inicializarJuego();
 	}
 	
@@ -62,6 +65,19 @@ public class Juego extends JPanel implements KeyListener, Runnable {
         this.puntaje = new Puntaje(0, 590, new Font("Arial black", 10, 20), Color.blue);
 		agregarEnemigos(enemigosPorLinea);
 	}
+	
+	private void cargarSonidos() {
+        try {
+            sonidos = new Sonidos();
+            sonidos.agregarSonido("background", "sonidos/background.wav");
+            sonidos.agregarSonido("comer", "sonidos/comer.wav");
+            sonidos.agregarSonido("muerte", "sonidos/muerte.wav");
+            sonidos.agregarSonido("ganaste", "sonidos/ganaste.wav");
+            sonidos.agregarSonido("perdiste", "sonidos/perdiste.wav");
+        } catch (Exception e1) {
+            throw new RuntimeException(e1);
+        }
+    }
 
 	@Override
 	public void run() {
@@ -105,6 +121,10 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		vidas.dibujarse(g);
 		puntaje.dibujarse(g);
 		banana.dibujarse(g);
+	}
+	
+	private void dibujarJuego() {
+		this.repaint();
 	}
 	
 	@Override
@@ -151,9 +171,6 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		moverEnemigos();
 	}
 	
-	private void dibujarJuego() {
-		this.repaint();
-	}
 	
 	private void esperar(int milisegundos) {
         try {
@@ -198,11 +215,11 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 		   verificarColisionContraVentana();
 		   verificarColisionEntreMonoYEnemigos();
 		   verificarColisionEntreMonoYBanana();
-		   verificarColisionEnemigosContraVentana();
+		   verificarColisionEnemigosConVentana();
 		   verificarFinDeJuego();
 	   }
 	   
-	   private void verificarColisionEnemigosContraVentana() {
+	   private void verificarColisionEnemigosConVentana() {
 			for (Enemigo enemigo : enemigos) {
 				if (enemigo.getPosicionX() >= anchoJuego) {
 					enemigo.setPosicionX(1);
@@ -229,6 +246,7 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 			while (iterador.hasNext()) {
 				Enemigo enemigo = iterador.next();
 				if (enemigo.hayColision(mono)) {
+					sonidos.tocarSonido("muerte");
 					mono.morir();
 					vidas.perderVida();
 				}
@@ -238,6 +256,7 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	   private void verificarColisionEntreMonoYBanana() {
 		   if (mono.hayColision(banana)) {
 			   this.banana = new Banana(new Random().nextInt(750),new Random().nextInt(550), 0, 0, 20, 10);
+			   sonidos.tocarSonido("comer");
 			   puntaje.sumarPunto();
 		   }
 	   }
@@ -245,8 +264,10 @@ public class Juego extends JPanel implements KeyListener, Runnable {
 	   private void verificarFinDeJuego() {
 	        if (vidas.getVidas() == 0) {
 	            pantallaActual = PANTALLA_PERDEDOR;
+	            sonidos.tocarSonido("perdiste");
 	        }if(mono.hayColision(arbol)) {
 	        	pantallaActual = PANTALLA_GANADOR;
+	        	sonidos.tocarSonido("ganaste");
 			   }
 	            
 	   }
